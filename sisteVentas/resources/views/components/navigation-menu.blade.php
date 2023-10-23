@@ -64,10 +64,11 @@
                     <div class="sb-nav-link-icon"><i class="fa-regular fa-clone"></i></div>
                     Presentaciones
                 </a>
-                <a class="nav-link" href="#">
-                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                    Tables
+                <a class="nav-link" href="{{ route('productos.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fa-brands fa-shopify"></i></div>
+                    Productos
                 </a>
+                
             </div>
         </div>
         <div class="sb-sidenav-footer">
