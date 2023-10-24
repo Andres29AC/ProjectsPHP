@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\PresentacionController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ClienteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,7 @@ Route::resource('categorias',CategoriaController::class);
 Route::resource('marcas',MarcaController::class);
 Route::resource('presentaciones',PresentacionController::class);
 Route::resource('productos',ProductoController::class);
+Route::resource('clientes',ClienteController::class);
 
 
 Route::get('/login', function () {
@@ -66,3 +68,14 @@ Route::get('/500', function () {
 //TODO - php artisan make:migration create_compra_producto_table
 //NOTE tambien tienes la opcion de crear la tabla pivote desde el modelo
 //NOTE - para tener un mejor control de las tablas pivote
+
+//NOTE - Comandos para migraciones y modificaciones de tablas
+//TODO: php artisan make:migration update_colums_to_documentos_table 
+//TODO: php artisan migrate:status
+//TODO: php artisan migrate
+//NOTE: Creacion de seeders
+//TODO: php artisan make:seeder DocumentoSeeder
+//TODO: php artisan db:seed
+
+//NOTE - Creacion de controlador de clientes
+//TODO: php artisan make:controller ClienteController --resource
