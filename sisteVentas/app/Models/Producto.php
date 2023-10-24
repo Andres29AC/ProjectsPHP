@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Producto extends Model
 {
@@ -22,7 +23,7 @@ class Producto extends Model
     public function marca(){
         return $this->belongsTo(Marca::class);
     }
-    public function presentaciones(){
+    public function presentacion(){
         return $this->belongsTo(Presentacione::class);
     }
     protected $fillable = [
@@ -37,7 +38,8 @@ class Producto extends Model
     public function handleUploadImage($img){
         $file = $img;
         $name = time().$file->getClientOriginalName();
-        $file->move(public_path().'/img/productos/',$name);
+        //$file->move(public_path().'/img/productos/',$name);
+        Storage::putFileAs('/public/productos/',$file,$name,['disk'=>'public']);
         return $name;
     }
 }
