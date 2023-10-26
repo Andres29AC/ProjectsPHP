@@ -72,6 +72,10 @@
                     <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
                     Clientes
                 </a>
+                <a class="nav-link" href="{{ route('proveedores.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-truck-field-un"></i></div>
+                    Proveedores
+                </a>
                 
             </div>
         </div>

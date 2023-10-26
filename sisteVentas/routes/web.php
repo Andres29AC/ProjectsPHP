@@ -6,6 +6,7 @@ use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\PresentacionController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\ProveedorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,8 @@ Route::resource('marcas',MarcaController::class);
 Route::resource('presentaciones',PresentacionController::class);
 Route::resource('productos',ProductoController::class);
 Route::resource('clientes',ClienteController::class);
+Route::resource('proveedores',ProveedorController::class);
+
 
 
 Route::get('/login', function () {
