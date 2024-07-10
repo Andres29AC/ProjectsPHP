@@ -12,6 +12,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(DocumentoSeeder::class);
+        //$this->call(DocumentoSeeder::class);
+        $this -> call(ComprobanteSeeder::class);
+        $this -> call(UserSeeder::class);
+        //NOTE: Para ejecutar los seeders, se debe ejecutar el siguiente comando: 
+        //php artisan db:seed
     }
 }

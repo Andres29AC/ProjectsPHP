@@ -69,12 +69,12 @@
                             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                                 <form action="{{route('marcas.edit',['marca'=>$marca])}}">
                                     <!-- @csrf -->
-                                    <button type="submit" class="btn btn-warning">Editar</button>
+                                    <button type="submit" title="Editar" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
                                 </form>
                                 @if($marca->caracteristica->estado == 1)
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModal-{{$marca->id}}">Eliminar</button>
+                                <button type="button" class="btn btn-danger" title="Eliminar"  data-bs-toggle="modal" data-bs-target="#confirmModal-{{$marca->id}}"><i class="fa-solid fa-trash"></i></button>
                                 @else
-                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#confirmModal-{{$marca->id}}">Restaurar</button>
+                                <button type="button" class="btn btn-dark" title="Restaurar" data-bs-toggle="modal" data-bs-target="#confirmModal-{{$marca->id}}"><i class="fa-solid fa-trash-arrow-up"></i></button>
                                 @endif
                             </div>
                         </td>
