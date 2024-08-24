@@ -23,7 +23,7 @@
         <li class="breadcrumb-item active">Crear Compra</li>
     </ol>
 </div>
-<form action="" method="post">
+<form action="{{route('compras.store')}}" method="post">
     @csrf
     <div class="container mt-4">
         <div class="row gy-4">
@@ -100,7 +100,7 @@
                                         <tr>
                                             <th></th>
                                             <th colspan="4">Total</th>
-                                            <th colspan="2"><span id="total">0</span></th>
+                                            <th colspan="2"><input type="hidden" name="total" value="0" id="inputTotal"><span id="total">0</span></th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -128,6 +128,9 @@
                                 <option value="{{$item->id}}">{{$item->persona->razon_social}}</option>
                                 @endforeach
                             </select>
+                            @error('proveedore_id')
+                                <small class="text_danger">{{'*'.$message}}</small>
+                            @enderror
                         </div>
                         <!--Tipo de comprobante-->
                         <div class="col-md-12 mb-2">
@@ -137,11 +140,17 @@
                                 <option value="{{$item->id}}">{{$item->tipo_comprobante}}</option>
                                 @endforeach
                             </select>
+                            @error('proveedore_id')
+                                <small class="text_danger">{{'*'.$message}}</small>
+                            @enderror
                         </div>
                         <!--Numero de comprobante-->
                         <div class="col-md-8 mb-2">
                             <label for="numero_comprobante" class="form-label">N° de comprobante:</label>
                             <input required type="text" name="numero_comprobante" id="numero_comprobante" class="form-control">
+                            @error('numero_comprobante')
+                                <small class="text_danger">{{'*'.$message}}</small>
+                            @enderror
                         </div>
                         <!--Impuesto-->
                         <!--
@@ -154,11 +163,19 @@
                         <div class="col-md-8 mb-2">
                             <label for="impuesto" class="form-label">Impuesto (%):</label>
                             <input type="number" name="impuesto" id="impuesto" class="form-control" step="0.01" placeholder="Ingrese el impuesto">
+                            @error('impuesto')
+                                <small class="text_danger">{{'*'.$message}}</small>
+                            @enderror
                         </div>
                         <!--Fecha-->
                         <div class="col-md-8 mb-2">
                             <label for="fecha" class="form-label">Fecha:</label>
                             <input readonly type="date" name="fecha" id="fecha" class="form-control border-success" value="<?php echo date("Y-m-d") ?>">
+                            <?php
+                            use Carbon\Carbon;
+                            $fecha_hora = Carbon::now()->toDateTimestring();
+                            ?>
+                            <input type="hidden" name="fecha_hora" value="{{$fecha_hora}}">
                         </div>
                         <div class="col-md-12 mb-2 text-center">
                             <button type="submit" class="btn btn-success" id="guardar">
@@ -223,6 +240,7 @@
         $('#igv').text(igv.toFixed(2));
         $('#total').text(total.toFixed(2));
         $('#exampleModal').modal('hide');
+        $('#inputTotal').val(total);
 
         disabledButtons();
     }
@@ -248,10 +266,10 @@
                     subtotal[cont] = cantidad * precioCompra;
                     let fila = '<tr id="fila' + cont + '">' +
                         '<th>' + (cont + 1) + '</th>' +
-                        '<td>' + nameProducto + '</td>' +
-                        '<td>' + cantidad + '</td>' +
-                        '<td>' + precioCompra + '</td>' +
-                        '<td>' + precioVenta + '</td>' +
+                        '<td><input type="hidden" name="arrayidproducto[]" value="' + idProducto + '">' + nameProducto + '</td>' +
+                        '<td><input type="hidden" name="arraycantidad[]" value="' + cantidad + '">' + cantidad + '</td>' +
+                        '<td><input type="hidden" name="arraypreciocompra[]" value="' + precioCompra + '">' + precioCompra + '</td>' +
+                        '<td><input type="hidden" name="arrayprecioventa[]" value="' + precioVenta + '">' + precioVenta + '</td>' +
                         '<td>' + subtotal[cont] + '</td>' +
                         '<td><button type="button" class="btn btn-danger" onClick="eliminarProducto(' + cont + ')"><i class="fa-solid fa-trash-can"></i></button></td>' +
                         '</tr>';
@@ -298,6 +316,7 @@
         $('#sumas').text(suma.toFixed(2));
         $('#igv').text(igv.toFixed(2));
         $('#total').text(total.toFixed(2));
+        $('#inputTotal').val(total);
         disabledButtons();
     }
 

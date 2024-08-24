@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Compra extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'fecha_hora',
+        'impuesto',
+        'total',
+        'comprobante_id',
+        'proveedore_id',
+        'numero_comprobante',
+    ];
     public function proveedore(){
         return $this->belongsTo(Proveedore::class);
     }

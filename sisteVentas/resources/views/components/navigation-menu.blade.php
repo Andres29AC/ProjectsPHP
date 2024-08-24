@@ -44,7 +44,7 @@
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-glasses"></i></div>
                             Ver
                         </a>
-                        <a class="nav-link" href="">
+                        <a class="nav-link" href="{{ route('compras.create') }}">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-cart-plus"></i></div>
                             Crear
                         </a>
