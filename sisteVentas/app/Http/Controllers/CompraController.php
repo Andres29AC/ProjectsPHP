@@ -20,7 +20,13 @@ class CompraController extends Controller
      */
     public function index()
     {
-        return view('compra.index');
+        $compras = Compra::with('comprobante', 'proveedore.persona')
+        ->where('estado', 1)
+        ->latest()
+        ->get();
+        //SECTION - Para ver los datos que se envían desde el formulario
+        //dd($compras);
+        return view('compra.index',compact('compras'));
     }
 
     /**
@@ -81,9 +87,10 @@ class CompraController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Compra $compra)
     {
-        //
+        //dd($compra->productos);
+        return view('compra.show', compact('compra'));
     }
 
     /**

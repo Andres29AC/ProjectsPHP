@@ -47,14 +47,42 @@
             <table id="datatablesSimple" class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Descripcion</th>
-                        <th>Estado</th>
+                        <th>Comprobante</th>
+                        <th>Proveedor</th>
+                        <th>Fecha y Hora</th>
+                        <th>Total</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    
+                    @foreach ($compras as $item)
+                        <tr>
+                            <td>
+                                <p class="fw-semibold mb-1">{{$item->comprobante->tipo_comprobante}}</p>
+                                <p class="text-muted mb-0">{{$item->numero_comprobante}}</p>
+                            </td>
+                            <td>
+                                <p class="fw-semibold mb-1">{{ucfirst($item->proveedore->persona->tipo_persona)}}</p>
+                                <p class="text-muted mb-0">{{$item->proveedore->persona->razon_social}}</p>
+                            </td>
+                            <td>
+                                {{
+                                    \Carbon\Carbon::parse($item->fecha_hora)->format('d/m/Y H:i:s')
+                                }}
+                            </td>
+                            <td>
+                                {{$item->total}}
+                            </td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Basic mixed styles exampple">
+                                    <form action="{{route('compras.show',['compra'=>$item])}}" method="get">
+                                        <button type="submit" class="btn btn-success">Ver</button>
+                                    </form>
+                                    <button type="button" class="btn btn-danger">Eliminar</button>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
