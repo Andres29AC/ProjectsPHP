@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\CompraController;
+use App\Http\Controllers\ventaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,7 +34,7 @@ Route::resource('productos',ProductoController::class);
 Route::resource('clientes',ClienteController::class);
 Route::resource('proveedores',ProveedorController::class);
 Route::resource('compras',CompraController::class);
-
+Route::resource('ventas',ventaController::class);
 
 
 Route::get('/login', function () {
@@ -84,3 +85,6 @@ Route::get('/500', function () {
 //NOTE - Creacion de controlador de clientes
 //SECTION php artisan make:controller ClienteController --resource
 //SECTION php artisan make:controller CompraController --resource
+
+//NOTE - Creacion de venta
+//!SECTION php artisan make:controller ventaController --resource

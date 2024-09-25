@@ -8,6 +8,42 @@
                     Panel
                 </a>
                 <div class="sb-sidenav-menu-heading">Modulos</div>
+                                <!-- Compras -->
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-store"></i></div>
+                    Compras
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="{{ route('compras.index') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-glasses"></i></div>
+                            Ver
+                        </a>
+                        <a class="nav-link" href="{{ route('compras.create') }}">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-cart-plus"></i></div>
+                            Crear
+                        </a>
+                    </nav>
+                </div>
+                <!-- Ventas -->
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVentas" aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+                    Ventas
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseVentas" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="{{ route('ventas.index') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-glasses"></i></div>
+                            Ver
+                        </a>
+                        <a class="nav-link" href="{{ route('ventas.create') }}">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-cart-arrow-down"></i></div>
+                            Crear
+                        </a>
+                    </nav>
+                </div>
                 <a class="nav-link" href="{{ route('categorias.index') }}">
                     <div class="sb-nav-link-icon"><i class="fa-solid fa-tags"></i></div>
                     Categorias
@@ -33,23 +69,6 @@
                     <div class="sb-nav-link-icon"><i class="fa-solid fa-truck-field-un"></i></div>
                     Proveedores
                 </a>
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                    <div class="sb-nav-link-icon"><i class="fa-solid fa-store"></i></div>
-                    Compras
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                    <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="{{ route('compras.index') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-glasses"></i></div>
-                            Ver
-                        </a>
-                        <a class="nav-link" href="{{ route('compras.create') }}">
-                        <div class="sb-nav-link-icon"><i class="fa-solid fa-cart-plus"></i></div>
-                            Crear
-                        </a>
-                    </nav>
-                </div>
             </div>
         </div>
         <div class="sb-sidenav-footer">
