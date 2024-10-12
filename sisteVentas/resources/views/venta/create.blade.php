@@ -28,7 +28,7 @@
                         <div class="col-md-12 mb-2">
                             <select name="producto_id" id="producto_id" class="form-control selectpicker show-tick" data-live-search="true" title="Busque un producto aqui" data-size="3">
                                 @foreach ($productos as $item)
-                                <option value="{{$item->id}}">{{$item->codigo.' '.$item->nombre}}</option>
+                                <option value="{{$item->id}}-{{$item->stock}}-{{$item->precio_venta}}">{{$item->codigo.' '.$item->nombre}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -38,7 +38,7 @@
                                 <div class="row">
                                     <label for="stock" class="form-label col-sm-4">En stock:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="stock" id="stock" class="form-control">
+                                        <input disabled type="text" name="stock" id="stock" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -51,7 +51,7 @@
                         <!--Precio de venta-->
                         <div class="col-md-4 mb-2">
                             <label for="precio_venta" class="form-label">Precio de venta:</label>
-                            <input type="number" name="precio_venta" id="precio_venta" class="form-control" step="0.1">
+                            <input disabled type="number" name="precio_venta" id="precio_venta" class="form-control" step="0.1">
                         </div>
                         <!--Descuento-->
                         <div class="col-md-4 mb-2">
@@ -174,6 +174,8 @@
                             ?>
                             <input type="hidden" name="fecha_hora" value="{{$fecha_hora}}">
                         </div>
+                        <!--User-->
+                        <input type="hidden" name="user_id" value="1">
                         <div class="col-md-12 mb-2 text-center">
                             <button type="submit" class="btn btn-success" id="guardar">
                                 Guardar
@@ -207,6 +209,152 @@
 @push('js')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
 <script>
+
+$(document).ready(function() {
+    $('#producto_id').change(mostrarValores);
+    $('#btn_agregar').click(function() {
+        agregarProducto();
+    });
+    
+    //SECTION Actualizar lods totales cuando el usuario cambia el impuesto
+    $('#impuesto').on('input', function() {
+        let porcentajeImpuesto = parseFloat($(this).val()) || 0;
+        calcularTotales(porcentajeImpuesto);
+    });
+    $('#btnCancelarVenta').click(function() {
+        cancelarVenta();
+    });
+    disableButtons();
+    $('#impuesto').val(impuesto + '%');
+});
+
+let cont = 0;
+let subtotal = [];
+let totalSinImpuesto = 0;
+let totalConImpuesto = 0;
+
+function mostrarValores() {
+    let dataProduct = document.getElementById('producto_id').value.split('-');
+    $('#stock').val(dataProduct[1]);
+    $('#precio_venta').val(dataProduct[2]);
+}
+
+function agregarProducto() {
+    let dataProduct = document.getElementById('producto_id').value.split('-');
+    let idProducto = dataProduct[0];
+    let nameProducto = $('#producto_id option:selected').text();
+    let cantidad = $('#cantidad').val();
+    let precioVenta = $('#precio_venta').val();
+    let descuento = $('#descuento').val();
+    let stock = $('#stock').val();
+
+    if (descuento == '') {
+        descuento = 0;
+    }
+
+    if (idProducto != '' && cantidad != '') {
+        if (parseInt(cantidad) > 0 && (cantidad % 1 == 0) && parseFloat(descuento) >= 0) {
+            if (parseFloat(cantidad) <= parseFloat(stock)) {
+                subtotal[cont] = (cantidad * precioVenta) - descuento;
+                totalSinImpuesto += subtotal[cont];
+                
+                let fila = `<tr id="fila${cont}">
+                    <th>${cont + 1}</th>
+                    <td><input type="hidden" name="arrayidproducto[]" value="${idProducto}">${nameProducto}</td>
+                    <td><input type="hidden" name="arraycantidad[]" value="${cantidad}">${cantidad}</td>
+                    <td><input type="hidden" name="arrayprecioventa[]" value="${precioVenta}">${precioVenta}</td>
+                    <td><input type="hidden" name="arraydescuento[]" value="${descuento}">${descuento}</td>
+                    <td>${subtotal[cont]}</td>
+                    <td><button class="btn btn-danger" type="button" onClick="eliminarProducto(${cont})"><i class="fa-solid fa-trash"></i></button></td>
+                </tr>`;
+                
+                $('#tabla_detalle').append(fila);
+                limpiarCampos();
+                cont++;
+                
+                // Calcular totales
+                calcularTotales(parseFloat($('#impuesto').val()) || 0);
+            } else {
+                showModal('Cantidad incorrecta', 'error');
+            }
+        } else {
+            showModal('Valores incorrectos', 'error');
+        }
+    } else {
+        showModal('Le faltan campos por llenar', 'error');
+    }
+}
+
+function calcularTotales(impuesto) {
+    //SECTION Calcular el total con impuesto
+    totalConImpuesto = totalSinImpuesto + (totalSinImpuesto * (impuesto / 100));
+
+    $('#sumas').text(totalSinImpuesto.toFixed(2));
+    $('#igv').text((totalSinImpuesto * (impuesto / 100)).toFixed(2));
+    $('#total').text(totalConImpuesto.toFixed(2));
+    $('#inputTotal').val(totalConImpuesto.toFixed(2)); 
+}
+
+function eliminarProducto(indice) {
+    totalSinImpuesto -= subtotal[indice];  
+    $('#fila' + indice).remove();  
+    calcularTotales(parseFloat($('#impuesto').val()) || 0);  
+}
+
+function limpiarCampos() {
+    $('#cantidad').val('');
+    $('#precio_venta').val('');
+    $('#descuento').val('');
+}
+function cancelarVenta() {
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "¡Perderás todos los cambios!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, cancelar venta',
+        cancelButtonText: 'No, seguir vendiendo'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            //SECTION Limpiar los campos del formulario
+            $('#producto_id').val('').selectpicker('refresh');
+            $('#cantidad').val('');
+            $('#descuento').val('');
+            $('#stock').val('');
+            $('#precio_venta').val('');
+            $('#tabla_detalle tbody').empty(); 
+            $('#sumas').text('0');
+            $('#igv').text('0');
+            $('#total').text('0');
+            $('#inputTotal').val('0');
+            $('#impuesto').val(impuesto + '%');
+            cont = 0; 
+            Swal.fire(
+                'Cancelado!',
+                'La venta ha sido cancelada.',
+                'success'
+            )
+        }
+    });
+}
+
+
+function showModal(message, icon = 'error') {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+    });
+
+    Toast.fire({
+        icon: icon,
+        title: message,
+    });
+}
 
 </script>
 @endpush
