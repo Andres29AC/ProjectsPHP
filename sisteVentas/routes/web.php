@@ -9,6 +9,10 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\ventaController;
+use App\Http\Controllers\loginController;
+use App\Http\Controllers\homeController;
+use App\Http\Controllers\logoutController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,10 +24,11 @@ use App\Http\Controllers\ventaController;
 |
 */
 
-Route::get('/', function () {
-    return view('template');
-});
-Route::view('/panel','panel.index')->name('panel');
+// Route::get('/', function () {
+//     return view('template');
+// });
+Route::get('/', [homeController::class, 'index'])->name('panel');
+// Route::view('/panel','panel.index')->name('panel');
 
 //Route::view('/categorias','categoria.index');
 
@@ -37,9 +42,9 @@ Route::resource('compras',CompraController::class);
 Route::resource('ventas',ventaController::class);
 
 
-Route::get('/login', function () {
-    return view('auth.login');
-});
+Route::get('/login', [loginController::class, 'index'])->name('login');
+Route::post('/login', [loginController::class, 'login']);
+Route::get('/logout', [logoutController::class, 'logout'])->name('logout');
 Route::get('/401', function () {
     return view('pages.401');
 });

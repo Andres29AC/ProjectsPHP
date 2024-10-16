@@ -73,7 +73,7 @@
         </div>
         <div class="sb-sidenav-footer">
             <div class="small">Bienbenido:</div>
-            Start Bootstrap
+            {{ auth()->user()->name }}
         </div>
     </nav>
 </div>
