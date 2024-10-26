@@ -17,6 +17,17 @@ class ventaController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // 'ver-venta',
+    // 'crear-venta',
+    // 'mostrar-venta',
+    // 'eliminar-venta',
+    function __construct()
+    {
+        $this->middleware('permission:ver-venta|crear-venta|mostrar-venta|eliminar-venta')->only('index');
+        $this->middleware('permission:crear-venta', ['only' => ['create','store']]);
+        $this->middleware('permission:mostrar-venta', ['only' => ['show']]);
+        $this->middleware('permission:eliminar-venta', ['only' => ['destroy']]);
+    }
     public function index()
     {
         $ventas = Venta::with('comprobante','cliente.persona','user')

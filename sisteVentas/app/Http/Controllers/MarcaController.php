@@ -13,6 +13,17 @@ class MarcaController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // 'ver-marca',
+    // 'crear-marca',
+    // 'editar-marca',
+    // 'eliminar-marca',
+    function __construct()
+    {
+         $this->middleware('permission:ver-marca|crear-marca|editar-marca|eliminar-marca')->only('index');
+         $this->middleware('permission:crear-marca', ['only' => ['create','store']]);
+         $this->middleware('permission:editar-marca', ['only' => ['edit','update']]);
+         $this->middleware('permission:eliminar-marca', ['only' => ['destroy']]);
+    }
     public function index()
     {
         $marcas = Marca::with('caracteristica')->latest()->get();

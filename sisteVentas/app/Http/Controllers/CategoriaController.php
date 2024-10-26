@@ -15,6 +15,16 @@ class CategoriaController extends Controller
     /**
      * Display a listing of the resource.
      */
+    function _construct(){
+        // 'ver-categoria',
+        // 'crear-categoria',
+        // 'editar-categoria',
+        // 'eliminar-categoria',
+        $this->middleware('permission:ver-categoria|crear-categoria|editar-categoria|eliminar-categoria',['only' => ['index']]);
+        $this->middleware('permission:crear-categoria',['only' => ['create','store']]);
+        $this->middleware('permission:editar-categoria',['only' => ['edit','update']]);
+        $this->middleware('permission:eliminar-categoria',['only' => ['destroy']]);
+    }
     public function index()
     {   
         $categorias = Categoria::with('caracteristica')->latest()->get();

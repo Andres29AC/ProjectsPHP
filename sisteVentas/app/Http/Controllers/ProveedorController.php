@@ -17,6 +17,17 @@ class ProveedorController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // 'ver-proveedore',
+    // 'crear-proveedore',
+    // 'editar-proveedore',
+    // 'eliminar-proveedore',
+    function __construct()
+    {
+         $this->middleware('permission:ver-proveedore|crear-proveedore|editar-proveedore|eliminar-proveedore')->only('index');
+         $this->middleware('permission:crear-proveedore', ['only' => ['create', 'store']]);
+         $this->middleware('permission:editar-proveedore', ['only' => ['edit', 'update']]);
+         $this->middleware('permission:eliminar-proveedore', ['only' => ['destroy']]);
+    }
     public function index()
     {
         $proveedores = Proveedore::with('persona.documento')->get();

@@ -15,6 +15,17 @@ class PresentacionController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // 'ver-presentacion',
+    // 'crear-presentacion',
+    // 'editar-presentacion',
+    // 'eliminar-presentacion',
+    function __construct()
+    {
+         $this->middleware('permission:ver-presentacion|crear-presentacion|editar-presentacion|eliminar-presentacion')->only('index');
+         $this->middleware('permission:crear-presentacion', ['only' => ['create','store']]);
+         $this->middleware('permission:editar-presentacion', ['only' => ['edit','update']]);
+         $this->middleware('permission:eliminar-presentacion', ['only' => ['destroy']]);
+    }
     public function index()
     {
         $presentaciones = Presentacione::with('caracteristica')->latest()->get();

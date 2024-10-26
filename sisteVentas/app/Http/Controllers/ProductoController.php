@@ -18,6 +18,17 @@ class ProductoController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // 'ver-producto',
+    // 'crear-producto',
+    // 'editar-producto',
+    // 'eliminar-producto',
+    function __construct()
+    {
+         $this->middleware('permission:ver-producto|crear-producto|editar-producto|eliminar-producto')->only('index');
+         $this->middleware('permission:crear-producto', ['only' => ['create','store']]);
+         $this->middleware('permission:editar-producto', ['only' => ['edit','update']]);
+         $this->middleware('permission:eliminar-producto', ['only' => ['destroy']]);
+    }
     public function index()
     {
         $productos = Producto::with(['categoria.caracteristica','marca.caracteristica','presentacion.caracteristica'])->latest()->get();
