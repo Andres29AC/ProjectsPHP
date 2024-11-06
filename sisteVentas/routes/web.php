@@ -12,6 +12,7 @@ use App\Http\Controllers\ventaController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\homeController;
 use App\Http\Controllers\logoutController;
+use App\Http\Controllers\profileController;
 use App\Http\Controllers\roleController;
 use App\Http\Controllers\userController;
 
@@ -44,7 +45,7 @@ Route::resource('compras',CompraController::class);
 Route::resource('ventas',ventaController::class);
 Route::resource('users',userController::class);
 Route::resource('roles',roleController::class);
-
+Route::resource('profile',profileController::class);
 
 
 
