@@ -69,10 +69,10 @@ class HotelsController extends Controller
                 $getPrice = Session::get($price);
                 return Redirect::route('hotel.payment');
             } else {
-                echo "Check-out date should be greater than check-in date.";
+                return Redirect::route('hotel.rooms.details',$room->id)->with(['error' => 'Check out date should be greater than check in date']);
             }
         } else {
-            echo "Choose dates in the future, invalid check-in or check-out date.";
+            return Redirect::route('hotel.rooms.details',$room->id)->with(['error_dates' => 'Choose dates in the future,invalid check in or check out dates']);
         }
     }
     public function payWithPaypal(){
@@ -80,9 +80,8 @@ class HotelsController extends Controller
         return view('hotels.payment', compact('paypalClientId'));
     }
     public function success(){
+        Session::forget('price'); //NOTE - Para limpiar información temporal como datos de pago o procesos
         return view('hotels.success');
     }
-
-
 }
 

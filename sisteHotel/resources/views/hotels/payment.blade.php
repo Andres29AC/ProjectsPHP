@@ -13,7 +13,7 @@
         </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container" style="display: flex; justify-content: center; align-items: center;">
         <div id="paypal-button-container" class="paypal-button-container"></div>
         <p id="result-message"></p>
 
@@ -21,7 +21,8 @@
             
         </script>
         <script>
-            const successUrl = '{{ url('hotels/success') }}';
+            const successUrl = "{{ url('hotels/success') }}";
+            const sessionPrice = "{{ Session::get('price') }}";
         </script>
         <script src="/js/payment.js"></script>
     </div>

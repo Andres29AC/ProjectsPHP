@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,6 +18,7 @@ Route::get("hotels/rooms-details/{id}",[App\Http\Controllers\Hotels\HotelsContro
 Route::post("hotels/rooms-booking/{id}",[App\Http\Controllers\Hotels\HotelsController::class,'roomBooking'])->name('hotel.rooms.booking');
 
 //NOTES: Paymant
-Route::get("hotels/payment",[App\Http\Controllers\Hotels\HotelsController::class,'payWithPaypal'])->name('hotel.payment');
+Route::get("hotels/payment",[App\Http\Controllers\Hotels\HotelsController::class,'payWithPaypal'])->name('hotel.payment')->middleware('check.price');
 
-Route::get("hotels/success",[App\Http\Controllers\Hotels\HotelsController::class,'success'])->name('hotel.success');
+Route::get("hotels/success",[App\Http\Controllers\Hotels\HotelsController::class,'success'])->name('hotel.success')->middleware('check.price');
+

@@ -13,6 +13,20 @@
         </div>
       </div>
     </div>
+	<div class="container">
+		@if(Session::has('error'))
+			<div class="alert alert-success">
+				{{Session::get('error')}}
+			</div>
+		@endif
+	</div>
+	<div class="container">
+		@if(Session::has('error_dates'))
+			<div class="alert alert-success">
+				{{Session::get('error_dates')}}
+			</div>
+		@endif
+	</div>
 
     <section class="ftco-section ftco-book ftco-no-pt ftco-no-pb">
     	<div class="container">
