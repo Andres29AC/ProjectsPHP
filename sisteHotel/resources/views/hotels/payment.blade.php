@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
             <div class="col-md-7 ftco-animate">
-                <h2 class="subheading">Pay With PayPal</h2>
+                <h1 class="subheading">Pay With PayPal</h1>
                 <h1 class="mb-4"></h1>
             </div>
             </div>

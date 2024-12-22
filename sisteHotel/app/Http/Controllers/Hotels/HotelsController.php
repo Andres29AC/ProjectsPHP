@@ -65,8 +65,12 @@ class HotelsController extends Controller
                     "hotel_name" => $hotel->name,
                 ]);
                 $totalPrice = $days * $room->price;
-                $price = Session::put('price', $totalPrice);
-                $getPrice = Session::get($price);
+                $bookRooms->price = $totalPrice;
+                $bookRooms->save();
+                Session::put('price', $totalPrice);
+
+                //$price = Session::put('price', $totalPrice);
+                //$getPrice = Session::get($price);
                 return Redirect::route('hotel.payment');
             } else {
                 return Redirect::route('hotel.rooms.details',$room->id)->with(['error' => 'Check out date should be greater than check in date']);
