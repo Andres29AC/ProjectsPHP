@@ -35,3 +35,9 @@ Route::group(['prefix' => 'hotels'], function () {
 
 //NOTE: Users
 Route::get("users/my-bookings",[App\Http\Controllers\Users\UsersController::class,'myBookings'])->name('users.bookings')->middleware('auth:web');
+
+//NOTE: Admin panel
+Route::get('admin/login', [App\Http\Controllers\Admins\AdminsController::class, 'viewLogin'])->name('view.login');
+Route::post('admin/login', [App\Http\Controllers\Admins\AdminsController::class, 'checkLogin'])->name('check.login');
+
+Route::get('admin/dashboard', [App\Http\Controllers\Admins\AdminsController::class, 'index'])->name('admins.dashboard');
