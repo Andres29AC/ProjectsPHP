@@ -37,7 +37,18 @@ Route::group(['prefix' => 'hotels'], function () {
 Route::get("users/my-bookings",[App\Http\Controllers\Users\UsersController::class,'myBookings'])->name('users.bookings')->middleware('auth:web');
 
 //NOTE: Admin panel
-Route::get('admin/login', [App\Http\Controllers\Admins\AdminsController::class, 'viewLogin'])->name('view.login');
-Route::post('admin/login', [App\Http\Controllers\Admins\AdminsController::class, 'checkLogin'])->name('check.login');
+Route::get('admin/login', [App\Http\Controllers\Admins\AdminsController::class, 'viewLogin'])->name('view.login')->middleware('check.for.login');
+Route::post('admin/login', [App\Http\Controllers\Admins\AdminsController::class, 'checkLogin'])->name('check.login')->middleware('check.for.login');
 
-Route::get('admin/dashboard', [App\Http\Controllers\Admins\AdminsController::class, 'index'])->name('admins.dashboard');
+
+
+Route::group(['prefix' => 'admin','middleware' => 'auth:admin'], function () {
+    //SECTION - Admins
+    Route::get('/index', [App\Http\Controllers\Admins\AdminsController::class, 'index'])->name('admins.dashboard');
+    Route::get('/all-admins', [App\Http\Controllers\Admins\AdminsController::class, 'allAdmins'])->name('admins.all');
+    Route::get('/create-admins', [App\Http\Controllers\Admins\AdminsController::class, 'createAdmins'])->name('admins.create');
+    Route::post('/create-admins', [App\Http\Controllers\Admins\AdminsController::class, 'storeAdmins'])->name('admins.store');
+    //!SECTION - Hotels
+    Route::get('/all-hotels', [App\Http\Controllers\Admins\AdminsController::class, 'allHotels'])->name('hotels.all');
+
+});

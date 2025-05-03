@@ -13,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'check.price' => App\Http\Middleware\CheckPrice::class,
+            'check.for.login' => App\Http\Middleware\CheckForLogin::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
