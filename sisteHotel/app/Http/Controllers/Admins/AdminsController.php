@@ -59,6 +59,32 @@ class AdminsController extends Controller
         $hotels = Hotel::select()->orderBy('id', 'desc')->get();
         return view('admins.allhotels', compact('hotels'));
     }
+    public function createHotels()
+    {
+        return view('admins.createhotels');
+    }
+    public function storeHotels(Request $request)
+    {
+        Request()->validate([
+            'name' => 'required|max:40',
+            'image' => 'required|mimes:jpg,jpeg,png|max:888',
+            'description' => 'required',
+            'location' => 'required|max:40',
+        ]);
+        $destinationPath = 'images/';
+        $myImage = $request->image ->getClientOriginalName();
+        $request->image->move(public_path($destinationPath), $myImage);
+
+        $storeHotels = Hotel::create([
+            'name' => $request->name, 
+            'image' => $myImage,
+            'description' => $request->description,
+            'location' => $request->location,
+        ]);
+        if ($storeHotels) {
+            return Redirect()->route('hotels.all')->with('success', 'Hotel created successfully');
+        }
+    }
 }
 //devcoder89DF
 
