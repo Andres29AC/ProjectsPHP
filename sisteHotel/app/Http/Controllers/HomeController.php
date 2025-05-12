@@ -25,7 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $hotels = Hotel::select()->orderBy('id', 'desc')->take(3)->get();
+        //$hotels = Hotel::select()->orderBy('id', 'desc')->take(5)->get();
+        $hotels = Hotel::all();
         $rooms = Apartment::select()->orderBy('id', 'desc')->take(3)->get();
         return view('home',compact('hotels','rooms'));
     }

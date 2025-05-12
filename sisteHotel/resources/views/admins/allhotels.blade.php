@@ -12,6 +12,20 @@
                   </div>
                 @endif
               </div>
+              <div class="container">
+                @if (session()->has('update'))
+                  <div class="alert alert-success">
+                    {{ session()->get('update') }}
+                  </div>
+                @endif
+              </div>
+              <div class="container">
+                @if (session()->has('delete'))
+                  <div class="alert alert-danger">
+                    {{ session()->get('delete') }}
+                  </div>
+                @endif
+              </div>
               <h5 class="card-title mb-4 d-inline">Hotels</h5>
              <a  href="{{ route('hotels.create') }}" class="btn btn-primary mb-4 text-center float-right">Create Hotels</a>
               <table class="table">
@@ -33,8 +47,8 @@
                     <td>{{$hotel ->location}}</td>
                     <td>{{$hotel ->description}}</td>
 
-                    <td><a  href="update-category.html" class="btn btn-dark text-white text-center ">Update </a></td>
-                    <td><a href="delete-category.html" class="btn btn-danger  text-center ">Delete </a></td>
+                    <td><a  href="{{ route('hotels.edit',$hotel->id)}}" class="btn btn-dark text-white text-center ">Update </a></td>
+                    <td><a href="{{ route('hotels.delete',$hotel->id)}}" class="btn btn-danger  text-center ">Delete </a></td>
                   </tr>
                     @endforeach
                 </tbody>

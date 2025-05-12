@@ -9,6 +9,7 @@ use App\Models\Hotel;
 use App\Models\Apartment;
 use Illuminate\Support\Facades\Hash;
 use Redirect;
+use File;
 class AdminsController extends Controller
 {
     public function viewLogin()
@@ -85,6 +86,74 @@ class AdminsController extends Controller
             return Redirect()->route('hotels.all')->with('success', 'Hotel created successfully');
         }
     }
+    public function editHotels(Request $request, $id)
+    {
+        $hotel = Hotel::find($id);
+        return view('admins.edithotels', compact('hotel'));
+    }
+    // public function updateHotels(Request $request, $id)
+    // {
+    //     Request()->validate([
+    //         'name' => 'required|max:40',
+    //         'description' => 'required',
+    //         'location' => 'required|max:40',
+    //     ]);
+    //     $hotel = Hotel::find($id);
+    //     $hotel->update($request->all());
+    //     if($hotel){
+    //         return Redirect()->route('hotels.all')->with('update', 'Hotel updated successfully');
+    //     }
+    // }
+    public function updateHotels(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|max:40',
+            'description' => 'required',
+            'location' => 'required|max:40',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+
+        $hotel = Hotel::findOrFail($id);
+
+        $hotel->name = $request->name;
+        $hotel->description = $request->description;
+        $hotel->location = $request->location;
+
+        if ($request->hasFile('image')) {
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+            $hotel->image = $imageName;
+        }
+
+        $hotel->save();
+
+        return redirect()->route('hotels.all')->with('update', 'Hotel updated successfully');
+    }
+    public function deleteHotels(Request $request, $id)
+    {
+        // $hotel = Hotel::find($id);
+        // if(File::exists(public_path('images/'.$hotel->image))){
+        //     File::delete(public_path('images/'.$hotel->image));
+        // }
+        // $hotel->delete();
+        // if($hotel){
+        //     return Redirect()->route('hotels.all')->with('delete', 'Hotel deleted successfully');
+        // }
+        $hotel = Hotel::find($id);
+        if ($hotel) {
+            $hotel->delete();
+            return Redirect()->route('hotels.all')->with('delete', 'Hotel deleted successfully');
+        } else {
+            return Redirect()->back()->with('error', 'Error in deleting hotel');
+        }
+    }
+    public function allRooms()
+    {
+        $rooms = Apartment::select()->orderBy('id', 'desc')->get();
+        return view('admins.allrooms', compact('rooms'));
+    }
+
+
 }
 //devcoder89DF
 

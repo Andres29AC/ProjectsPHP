@@ -51,7 +51,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="rooms-admins/show-rooms.html" style="margin-left: 20px;">
+                <a class="nav-link" href="{{ route('rooms.all')}}" style="margin-left: 20px;">
                 <i class="fas fa-bed"></i> Rooms
                 </a>
             </li>
