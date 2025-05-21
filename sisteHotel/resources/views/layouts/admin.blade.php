@@ -56,7 +56,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="bookings-admins/show-bookings.html" style="margin-left: 20px;">
+                <a class="nav-link" href="{{ route('bookings.all')}}" style="margin-left: 20px;">
                 <i class="fas fa-calendar-check"></i> Bookings
                 </a>
             </li>

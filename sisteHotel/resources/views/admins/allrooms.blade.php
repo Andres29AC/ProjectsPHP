@@ -4,8 +4,22 @@
     <div class="col">
         <div class="card">
            <div class="card-body">
+              <div class="container">
+                @if (session()->has('success'))
+                  <div class="alert alert-success">
+                    {{ session()->get('success') }}
+                  </div>
+                @endif
+              </div>
+              <div class="container">
+                @if (session()->has('delete'))
+                  <div class="alert alert-danger">
+                    {{ session()->get('delete') }}
+                  </div>
+                @endif
+              </div>
               <h5 class="card-title mb-4 d-inline">Rooms</h5>
-             <a  href="create-rooms.html" class="btn btn-primary mb-4 text-center float-right">Create Room</a>
+             <a  href="{{ route('rooms.create')}}" class="btn btn-primary mb-4 text-center float-right">Create Room</a>
               <table class="table">
                 <thead>
                   <tr>
@@ -38,7 +52,7 @@
                     <!-- <td>1</td>
 
                     <td><a href="status.html" class="btn btn-danger  text-center ">status</a></td> -->
-                    <td><a href="delete-country.html" class="btn btn-danger  text-center ">Delete</a></td>
+                    <td><a href="{{ route('rooms.delete',$room->id) }}" class="btn btn-danger  text-center ">Delete</a></td>
                   </tr>
                   @endforeach
                 </tbody>
